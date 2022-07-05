@@ -8,6 +8,7 @@ import lombok.Setter;
 import uz.isystem.universitysystem.university.University;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -30,4 +31,17 @@ public class Faculty {
 
     @Column(name = "university_id")
     private Integer universityId;
+
+
+    @Column(name = "is_active")
+    public Boolean isActive = false;
+
+    @Column(name = "created_date")
+    public LocalDateTime createdDate;
+
+    @Column(name = "updated_date")
+    public LocalDateTime updatedDate;
+
+    @Column(name = "deleted_date")
+    public LocalDateTime deletedDate;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -28,4 +29,16 @@ public class University {
 
     @Column(name = "opened_year")
     private Integer openedYear;
+
+    @Column(name = "is_active")
+    public Boolean isActive = false;
+
+    @Column(name = "created_date")
+    public LocalDateTime createdDate;
+
+    @Column(name = "updated_date")
+    public LocalDateTime updatedDate;
+
+    @Column(name = "deleted_date")
+    public LocalDateTime deletedDate;
 }

@@ -8,6 +8,7 @@ import uz.isystem.universitysystem.journal.Journal;
 import uz.isystem.universitysystem.subject.Subject;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -34,4 +35,16 @@ public class JournalSubject {
 
     @Column(name = "journal_id")
     private Integer journalId;
+
+    @Column(name = "is_active")
+    public Boolean isActive = false;
+
+    @Column(name = "created_date")
+    public LocalDateTime createdDate;
+
+    @Column(name = "updated_date")
+    public LocalDateTime updatedDate;
+
+    @Column(name = "deleted_date")
+    public LocalDateTime deletedDate;
 }

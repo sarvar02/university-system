@@ -9,6 +9,7 @@ import uz.isystem.universitysystem.journal.Journal;
 import uz.isystem.universitysystem.student.Student;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,6 +22,9 @@ public class Mark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer markId;
+
+    @Column(name = "mark_value")
+    private Integer markValue;
 
     @ManyToOne
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
@@ -35,4 +39,16 @@ public class Mark {
 
     @Column(name = "journal_id")
     private Integer journalId;
+
+    @Column(name = "is_active")
+    public Boolean isActive = false;
+
+    @Column(name = "created_date")
+    public LocalDateTime createdDate;
+
+    @Column(name = "updated_date")
+    public LocalDateTime updatedDate;
+
+    @Column(name = "deleted_date")
+    public LocalDateTime deletedDate;
 }

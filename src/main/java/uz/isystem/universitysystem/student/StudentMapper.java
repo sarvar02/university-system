@@ -15,4 +15,7 @@ public interface StudentMapper extends BaseMapper<Student, StudentDto> {
 
     @Override
     List<StudentDto> toDto(List<Student> e);
+
+    @Override
+    Student toEntity(StudentDto studentDto);
 }

@@ -9,6 +9,7 @@ import uz.isystem.universitysystem.journal.Journal;
 import uz.isystem.universitysystem.faculty.Faculty;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -35,11 +36,23 @@ public class Group {
     @Column(name = "faculty_id")
     private Integer facultyId;
 
-    @ManyToOne
-    @JoinColumn(name = "journal_id", insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "journalId")
     private Journal journal;
 
     @Column(name = "journal_id")
     private Integer journalId;
+
+    @Column(name = "is_active")
+    public Boolean isActive = false;
+
+    @Column(name = "created_date")
+    public LocalDateTime createdDate;
+
+    @Column(name = "updated_date")
+    public LocalDateTime updatedDate;
+
+    @Column(name = "deleted_date")
+    public LocalDateTime deletedDate;
 
 }

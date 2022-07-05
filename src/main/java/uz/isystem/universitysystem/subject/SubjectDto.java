@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.isystem.universitysystem.group.GroupDto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,7 +17,9 @@ import uz.isystem.universitysystem.group.GroupDto;
 public class SubjectDto {
 
     private Integer subjectId;
+    @NotBlank(message = "Subject name is mandatory")
     private String name;
     private GroupDto groupDto;
+    @NotNull(message = "Group id cannot be null")
     private Integer groupId;
 }

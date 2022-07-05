@@ -8,6 +8,8 @@ import lombok.Setter;
 import uz.isystem.universitysystem.journal.JournalDto;
 import uz.isystem.universitysystem.student.StudentDto;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +18,9 @@ public class MarkDto {
 
     private Integer markId;
     private StudentDto studentDto;
+    @NotNull(message = "Student id cannot be null")
     private Integer studentId;
     private JournalDto journalDto;
+    @NotNull(message = "Journal id cannot be null")
     private Integer journalId;
 }
