@@ -64,7 +64,8 @@ public class SubjectServiceImpl extends AbstractService<SubjectMapper> implement
         return mapper.toDto(subjects);
     }
 
-    // Secondary Functions
+
+    // ======== SECONDARY FUNCTIONS ========
 
     public Subject getEntity(Integer id){
         return subjectRepository.findBySubjectIdAndDeletedDateIsNullAndIsActive(id, true)

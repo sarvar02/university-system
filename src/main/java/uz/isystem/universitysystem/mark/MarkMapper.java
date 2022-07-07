@@ -14,7 +14,6 @@ public interface MarkMapper extends BaseMapper<Mark, MarkDto> {
     @Override
     @Mapping(target = "studentDto", source = "student")
     @Mapping(target = "journalDto", source = "journal")
-    @Mapping(target = "subjectDto", source = "subject")
     MarkDto toDto(Mark mark);
 
     @Override

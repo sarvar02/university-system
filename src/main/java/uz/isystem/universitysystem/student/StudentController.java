@@ -66,10 +66,10 @@ public class StudentController {
     }
 
     // Student haqida ba'tafsil ma'lumot olish:
-    // Student ismi, Gruppasini nomi, Fakultetini nomi
-    @GetMapping("/{id}/info")
-    public ResponseEntity<StudentInfoDto> getStudentInfoById(@PathVariable("id") Integer id){
-        StudentInfoDto studentInfoDto = studentService.getStudentInfoById(id);
+    // Student ismi, Gruppasini nomi, Fakultetini nomi, Universitet haqida ma'lumot
+    @GetMapping("/info")
+    public ResponseEntity<StudentInfoDto> getStudentInfoById(@RequestParam("name") String name){
+        StudentInfoDto studentInfoDto = studentService.getStudentInfoById(name);
         return new ResponseEntity<>(studentInfoDto, HttpStatus.OK);
     }
 

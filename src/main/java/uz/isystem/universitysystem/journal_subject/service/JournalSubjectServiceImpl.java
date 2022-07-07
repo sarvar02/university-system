@@ -64,7 +64,8 @@ public class JournalSubjectServiceImpl extends AbstractService<JournalSubjectMap
         return mapper.toDto(journalSubjects);
     }
 
-    // Secondary Functions
+
+    // ======== SECONDARY FUNCTIONS ========
 
     public JournalSubject getEntity(Integer id){
         return journalSubjectRepository.findByJournalSubjectIdAndDeletedDateIsNullAndIsActive(id, true)

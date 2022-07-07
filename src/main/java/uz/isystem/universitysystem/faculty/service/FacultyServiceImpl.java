@@ -109,7 +109,7 @@ public class FacultyServiceImpl extends AbstractService<FacultyMapper> implement
         return new FacultyGroupsDto(groupInfoDtos);
     }
 
-    // Secondary functions
+    // ======== SECONDARY FUNCTIONS ========
 
     public Faculty getEntity(Integer id){
         return facultyRepository.findByFacultyIdAndDeletedDateIsNullAndIsActive(id, true)

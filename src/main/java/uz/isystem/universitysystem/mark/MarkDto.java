@@ -20,9 +20,9 @@ public class MarkDto {
     private Integer markId;
     @NotNull(message = "Mark value cannot be null")
     private Integer markValue;
-    private SubjectDto subjectDto;
-    @NotNull(message = "Mark value cannot be null")
-    private Integer subjectId;
+//    private SubjectDto subjectDto;
+//    @NotNull(message = "Mark value cannot be null")
+//    private Integer subjectId;
     private StudentDto studentDto;
     @NotNull(message = "Student id cannot be null")
     private Integer studentId;

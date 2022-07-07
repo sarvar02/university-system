@@ -66,7 +66,8 @@ public class UniversityServiceImpl extends AbstractService<UniversityMapper> imp
         return mapper.toDto(universities);
     }
 
-    // Secondary functions
+
+    // ======== SECONDARY FUNCTIONS ========
 
     public University getEntity(Integer id){
         return universityRepository.findByUniversityIdAndDeletedDateIsNullAndIsActive(id, true)

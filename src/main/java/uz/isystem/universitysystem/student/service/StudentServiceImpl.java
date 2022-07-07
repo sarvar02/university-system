@@ -15,6 +15,8 @@ import uz.isystem.universitysystem.student.Student;
 import uz.isystem.universitysystem.student.StudentDto;
 import uz.isystem.universitysystem.student.StudentMapper;
 import uz.isystem.universitysystem.student.StudentRepository;
+import uz.isystem.universitysystem.university.UniversityDto;
+import uz.isystem.universitysystem.university.service.UniversityService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,13 +28,15 @@ public class StudentServiceImpl extends AbstractService<StudentMapper> implement
     private final GroupService groupService;
     private final GroupSubjectsService groupSubjectsService;
     private final FacultyService facultyService;
+    private final UniversityService universityService;
 
-    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper, GroupService groupService, GroupSubjectsService groupSubjectsService, FacultyService facultyService) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper, GroupService groupService, GroupSubjectsService groupSubjectsService, FacultyService facultyService, UniversityService universityService) {
         super(studentMapper);
         this.studentRepository = studentRepository;
         this.groupService = groupService;
         this.groupSubjectsService = groupSubjectsService;
         this.facultyService = facultyService;
+        this.universityService = universityService;
     }
 
     @Override
@@ -99,12 +103,18 @@ public class StudentServiceImpl extends AbstractService<StudentMapper> implement
     }
 
     @Override
-    public StudentInfoDto getStudentInfoById(Integer studentId) {
-        StudentDto studentDto = getById(studentId);
-        GroupDto groupDto = groupService.getById(studentDto.getGroupId());
+    public StudentInfoDto getStudentInfoById(String name) {
+        Student student = getStudentByName(name);
+        GroupDto groupDto = groupService.getById(student.getGroupId());
         FacultyDto facultyDto = facultyService.getById(groupDto.getFacultyId());
+        UniversityDto universityDto = universityService.getById(facultyDto.getUniversityId());
 
-        return new StudentInfoDto(studentDto.getName(), groupDto.getName(), facultyDto.getFacultyName());
+        return new StudentInfoDto(
+                student.getName(),
+                groupDto.getName(),
+                facultyDto.getFacultyName(),
+                universityDto.getUniversityName(),
+                universityDto.getAddress());
     }
 
 
@@ -120,6 +130,11 @@ public class StudentServiceImpl extends AbstractService<StudentMapper> implement
         if(studentList.isEmpty())
             throw new NotFoundException("Student not found !");
         return studentList;
+    }
+
+    public Student getStudentByName(String name){
+        return studentRepository.findByNameAndDeletedDateIsNullAndIsActive(name, true)
+                .orElseThrow(() -> new NotFoundException("Student with this Name not found !"));
     }
 
     public void saveToDatabase(Student student){

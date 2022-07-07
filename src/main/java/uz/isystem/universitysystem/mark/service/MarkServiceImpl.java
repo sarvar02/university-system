@@ -76,7 +76,7 @@ public class MarkServiceImpl extends AbstractService<MarkMapper> implements Mark
         return mapper.toDto(marks);
     }
 
-    // Secondary Functions
+    // ======== SECONDARY FUNCTIONS ========
 
     public Mark getEntity(Integer id){
         return markRepository.findByMarkIdAndDeletedDateIsNullAndIsActive(id, true)

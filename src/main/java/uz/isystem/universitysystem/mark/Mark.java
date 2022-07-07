@@ -41,12 +41,12 @@ public class Mark {
     @Column(name = "journal_id")
     private Integer journalId;
 
-    @ManyToOne
-    @JoinColumn(name = "subject_id", insertable = false, updatable = false)
-    private Subject subject;
-
-    @Column(name = "subject_id")
-    private Integer subjectId;
+//    @ManyToOne
+//    @JoinColumn(name = "subject_id", insertable = false, updatable = false)
+//    private Subject subject;
+//
+//    @Column(name = "subject_id")
+//    private Integer subjectId;
 
     @Column(name = "is_active")
     public Boolean isActive = false;

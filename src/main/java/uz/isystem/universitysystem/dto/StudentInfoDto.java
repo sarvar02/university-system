@@ -13,4 +13,6 @@ public class StudentInfoDto {
     private String studentName;
     private String groupName;
     private String facultyName;
+    private String universityName;
+    private String universityAddress;
 }

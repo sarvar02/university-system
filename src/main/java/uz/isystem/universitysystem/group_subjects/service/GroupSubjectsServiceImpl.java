@@ -99,7 +99,8 @@ public class GroupSubjectsServiceImpl extends AbstractService<GroupSubjectsMappe
     }
 
 
-    // Secondary Functions
+    // ======== SECONDARY FUNCTIONS ========
+
     public GroupSubjects getEntity(Integer id){
         return groupSubjectsRepository.findByGroupSubjectsIdAndDeletedDateIsNullAndIsActive(id, true)
                 .orElseThrow(() -> new NotFoundException("Group Subject Not Found !"));
