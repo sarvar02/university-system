@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.isystem.universitysystem.journal.Journal;
 import uz.isystem.universitysystem.faculty.Faculty;
+import uz.isystem.universitysystem.subject.Subject;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,7 +39,7 @@ public class Group {
     private Integer facultyId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "journalId")
+    @JoinColumn(name = "group_id", referencedColumnName = "journal_id")
     private Journal journal;
 
     @Column(name = "journal_id")

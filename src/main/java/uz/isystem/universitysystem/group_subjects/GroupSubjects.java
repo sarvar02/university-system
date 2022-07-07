@@ -1,10 +1,12 @@
-package uz.isystem.universitysystem.student;
+package uz.isystem.universitysystem.group_subjects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.isystem.universitysystem.faculty.Faculty;
 import uz.isystem.universitysystem.group.Group;
+import uz.isystem.universitysystem.subject.Subject;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,15 +16,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "students")
-public class Student {
+@Table(name = "group_subjects")
+public class GroupSubjects {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer studentId;
-
-    @Column(name = "name")
-    private String name;
+    @GeneratedValue
+    private Integer groupSubjectsId;
 
     @ManyToOne
     @JoinColumn(name = "group_id", insertable = false, updatable = false)
@@ -30,6 +29,13 @@ public class Student {
 
     @Column(name = "group_id")
     private Integer groupId;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id", insertable = false, updatable = false)
+    private Subject subject;
+
+    @Column(name = "subject_id")
+    private Integer subjectId;
 
     @Column(name = "is_active")
     public Boolean isActive = false;

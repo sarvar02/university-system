@@ -32,7 +32,6 @@ public class Faculty {
     @Column(name = "university_id")
     private Integer universityId;
 
-
     @Column(name = "is_active")
     public Boolean isActive = false;
 

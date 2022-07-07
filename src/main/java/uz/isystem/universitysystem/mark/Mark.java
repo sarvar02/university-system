@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.isystem.universitysystem.journal.Journal;
 import uz.isystem.universitysystem.student.Student;
+import uz.isystem.universitysystem.subject.Subject;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -39,6 +40,13 @@ public class Mark {
 
     @Column(name = "journal_id")
     private Integer journalId;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id", insertable = false, updatable = false)
+    private Subject subject;
+
+    @Column(name = "subject_id")
+    private Integer subjectId;
 
     @Column(name = "is_active")
     public Boolean isActive = false;

@@ -10,4 +10,9 @@ public class ControllerExceptionHandling {
     public ResponseEntity<?> exceptionHandler(NotFoundException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> existException(AlreadyExistException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

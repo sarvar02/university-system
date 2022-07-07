@@ -8,4 +8,6 @@ import uz.isystem.universitysystem.journal.JournalDto;
 @Service
 public interface JournalService extends GenericCrudService<Journal, JournalDto, Integer> {
 
+    public void existJournal(Integer journalId);
+
 }

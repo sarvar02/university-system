@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.isystem.universitysystem.journal.JournalDto;
 import uz.isystem.universitysystem.faculty.FacultyDto;
+import uz.isystem.universitysystem.subject.Subject;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,5 +30,4 @@ public class GroupDto {
     private Integer facultyId;
     private JournalDto journalDto;
     private Integer journalId;
-
 }

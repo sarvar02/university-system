@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 
-    Optional<Group> findByGroupIdAndCreatedDateIsNullAndIsActive(Integer groupId, Boolean isActive);
+    Optional<Group> findByGroupIdAndDeletedDateIsNullAndIsActive(Integer groupId, Boolean isActive);
 
     List<Group> findAllByDeletedDateIsNullAndIsActive(Boolean isActive);
 
@@ -21,4 +21,5 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 
     Boolean existsByName(String name);
 
+    Boolean existsByGroupIdAndDeletedDateIsNullAndIsActive(Integer groupId, Boolean isActive);
 }

@@ -5,4 +5,7 @@ import uz.isystem.universitysystem.university.University;
 import uz.isystem.universitysystem.university.UniversityDto;
 
 public interface UniversityService extends GenericCrudService<University, UniversityDto, Integer> {
+
+    boolean isExistUniversity(Integer id);
+
 }

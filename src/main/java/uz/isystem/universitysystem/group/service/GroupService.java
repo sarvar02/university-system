@@ -14,4 +14,6 @@ public interface GroupService extends GenericCrudService<Group, GroupDto, Intege
 
     GroupDto getGroupsByJournalId(Integer journalId);
 
+    void existGroup(Integer groupId);
+
 }

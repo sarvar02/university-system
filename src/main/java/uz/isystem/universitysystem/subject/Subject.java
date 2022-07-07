@@ -25,12 +25,12 @@ public class Subject {
     @Column(name = "subject_name", nullable = false, unique = true)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id", insertable = false, updatable = false)
-    private Group group;
-
-    @Column(name = "group_id")
-    private Integer groupId;
+//    @ManyToOne
+//    @JoinColumn(name = "group_id", insertable = false, updatable = false)
+//    private Group group;
+//
+//    @Column(name = "group_id")
+//    private Integer groupId;
 
     @Column(name = "is_active")
     public Boolean isActive = false;

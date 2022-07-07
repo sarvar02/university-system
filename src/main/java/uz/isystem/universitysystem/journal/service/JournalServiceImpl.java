@@ -84,4 +84,9 @@ public class JournalServiceImpl extends AbstractService<JournalMapper> implement
     public void saveToDatabase(Journal journal){
         journalRepository.save(journal);
     }
+
+    public void existJournal(Integer journalId){
+        if(!journalRepository.existsByJournalIdAndDeletedDateIsNullAndIsActive(journalId, true))
+            throw new NotFoundException("Journal with this ID not found !");
+    }
 }

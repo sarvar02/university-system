@@ -12,4 +12,6 @@ public interface UniversityRepository extends JpaRepository<University, Integer>
     Optional<University> findByUniversityIdAndDeletedDateIsNullAndIsActive(Integer universityId, Boolean isActive);
 
     List<University> findAllByDeletedDateIsNullAndIsActive(Boolean isActive);
+
+    Boolean existsByUniversityIdAndDeletedDateIsNullAndIsActive(Integer id, Boolean isActive);
 }

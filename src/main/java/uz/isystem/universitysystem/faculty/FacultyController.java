@@ -1,9 +1,11 @@
 package uz.isystem.universitysystem.faculty;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import uz.isystem.universitysystem.dto.FacultyGroupsDto;
 import uz.isystem.universitysystem.faculty.service.FacultyService;
 
 import javax.validation.Valid;
@@ -47,6 +49,13 @@ public class FacultyController {
     public ResponseEntity getAllFaculties(){
         List<FacultyDto> facultyDtoList = facultyService.getAll();
         return ResponseEntity.ok(facultyDtoList);
+    }
+
+    // Fakultetga tegishli bo'lgan guruhlar va talabalar sonini olish uchun API
+    @GetMapping("/{id}/groups-info")
+    public ResponseEntity<FacultyGroupsDto> getGroupsInfoByFacultyId(@PathVariable("id") Integer id){
+        FacultyGroupsDto facultyGroupsDto = facultyService.getGroupsOfFaculty(id);
+        return new ResponseEntity<>(facultyGroupsDto, HttpStatus.OK);
     }
 
 }

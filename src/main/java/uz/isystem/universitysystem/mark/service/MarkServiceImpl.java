@@ -3,10 +3,12 @@ package uz.isystem.universitysystem.mark.service;
 import org.springframework.stereotype.Service;
 import uz.isystem.universitysystem._service.AbstractService;
 import uz.isystem.universitysystem.exception.NotFoundException;
+import uz.isystem.universitysystem.journal.service.JournalService;
 import uz.isystem.universitysystem.mark.Mark;
 import uz.isystem.universitysystem.mark.MarkDto;
 import uz.isystem.universitysystem.mark.MarkMapper;
 import uz.isystem.universitysystem.mark.MarkRepository;
+import uz.isystem.universitysystem.student.service.StudentService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,10 +17,14 @@ import java.util.List;
 public class MarkServiceImpl extends AbstractService<MarkMapper> implements MarkService{
 
     private final MarkRepository markRepository;
+    private final StudentService studentService;
+    private final JournalService journalService;
 
-    public MarkServiceImpl(MarkRepository markRepository, MarkMapper markMapper) {
+    public MarkServiceImpl(MarkRepository markRepository, MarkMapper markMapper, StudentService studentService, JournalService journalService) {
         super(markMapper);
         this.markRepository = markRepository;
+        this.studentService = studentService;
+        this.journalService = journalService;
     }
 
     @Override
@@ -28,6 +34,11 @@ public class MarkServiceImpl extends AbstractService<MarkMapper> implements Mark
 
     @Override
     public void create(MarkDto dto) {
+
+        // Checking student
+        studentService.existStudent(dto.getStudentId());
+        // Checking journal
+        journalService.existJournal(dto.getJournalId());
 
         Mark mark = mapper.toEntity(dto);
         mark.setCreatedDate(LocalDateTime.now());

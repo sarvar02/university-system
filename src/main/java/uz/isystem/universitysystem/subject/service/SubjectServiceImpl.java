@@ -82,4 +82,10 @@ public class SubjectServiceImpl extends AbstractService<SubjectMapper> implement
     public void saveToDatabase(Subject subject){
         subjectRepository.save(subject);
     }
+
+    @Override
+    public void existSubject(Integer subjectId) {
+        if(!subjectRepository.existsBySubjectIdAndDeletedDateIsNullAndIsActive(subjectId, true))
+            throw new NotFoundException("Subject with this ID not found !");
+    }
 }

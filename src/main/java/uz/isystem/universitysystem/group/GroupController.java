@@ -19,44 +19,44 @@ public class GroupController {
     private final GroupService groupService;
 
     @GetMapping("/{id}")
-    public ResponseEntity getGroup(@PathVariable("id") Integer groupId){
-        GroupDto groupDto = groupService.getById(groupId);
-        return ResponseEntity.ok(groupDto);
+    public ResponseEntity<GroupDto> getGroup(@PathVariable("id") Integer id){
+        GroupDto groupDto = groupService.getById(id);
+        return new ResponseEntity(groupDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity createGroup(@Valid @RequestBody GroupDto groupDto){
+    public ResponseEntity<Void> createGroup(@Valid @RequestBody GroupDto groupDto){
         groupService.create(groupDto);
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/group").toString());
-        return ResponseEntity.ok("NEW GROUP CREATED !");
+        return new ResponseEntity("NEW GROUP CREATED !", HttpStatus.OK);
     }
 
-    @PutMapping("/{Id}")
-    public ResponseEntity updateGroup(@PathVariable("id") Integer id,
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateGroup(@PathVariable("id") Integer id,
                                       @Valid @RequestBody GroupDto groupDto){
         groupService.update(groupDto, id);
-        return ResponseEntity.ok("Group Successfully updated !");
+        return new ResponseEntity("Group Successfully updated !", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteStudent(@PathVariable("id") Integer id){
+    public ResponseEntity<Void> deleteStudent(@PathVariable("id") Integer id){
         groupService.delete(id);
-        return ResponseEntity.ok("Group successfully deleted !");
+        return new ResponseEntity("Group successfully deleted !", HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity getAllGroups(){
+    public ResponseEntity<List<GroupDto>> getAllGroups(){
         List<GroupDto> groupDtoList = groupService.getAll();
-        return ResponseEntity.ok(groupDtoList);
+        return new ResponseEntity(groupDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/{facultyId}")
+    @GetMapping("/faculty/{facultyId}")
     public ResponseEntity<List<GroupDto>> getGroupsByFacultyId(@PathVariable("facultyId") Integer facultyId){
         List<GroupDto> groupDtoList = groupService.getGroupsByFacultyId(facultyId);
         return new ResponseEntity<>(groupDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/{journalId}")
+    @GetMapping("/journal/{journalId}")
     public ResponseEntity<GroupDto> getGroupsByJournalId(@PathVariable("journalId") Integer journalId){
         GroupDto groupDtoList = groupService.getGroupsByJournalId(journalId);
         return new ResponseEntity<>(groupDtoList, HttpStatus.OK);

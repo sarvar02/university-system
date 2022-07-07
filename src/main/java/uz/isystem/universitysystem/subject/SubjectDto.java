@@ -19,7 +19,4 @@ public class SubjectDto {
     private Integer subjectId;
     @NotBlank(message = "Subject name is mandatory")
     private String name;
-    private GroupDto groupDto;
-    @NotNull(message = "Group id cannot be null")
-    private Integer groupId;
 }

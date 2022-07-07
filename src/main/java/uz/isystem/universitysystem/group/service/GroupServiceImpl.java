@@ -4,10 +4,12 @@ import org.springframework.stereotype.Service;
 import uz.isystem.universitysystem._service.AbstractService;
 import uz.isystem.universitysystem.exception.AlreadyExistException;
 import uz.isystem.universitysystem.exception.NotFoundException;
+import uz.isystem.universitysystem.faculty.service.FacultyService;
 import uz.isystem.universitysystem.group.Group;
 import uz.isystem.universitysystem.group.GroupDto;
 import uz.isystem.universitysystem.group.GroupMapper;
 import uz.isystem.universitysystem.group.GroupRepository;
+import uz.isystem.universitysystem.journal.service.JournalService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,10 +19,14 @@ import java.util.Optional;
 public class GroupServiceImpl extends AbstractService<GroupMapper> implements GroupService{
 
     private final GroupRepository groupRepository;
+    private final JournalService journalService;
+    private final FacultyService facultyService;
 
-    public GroupServiceImpl(GroupRepository groupRepository, GroupMapper groupMapper) {
+    public GroupServiceImpl(GroupRepository groupRepository, GroupMapper groupMapper, JournalService journalService, FacultyService facultyService) {
         super(groupMapper);
         this.groupRepository = groupRepository;
+        this.journalService = journalService;
+        this.facultyService = facultyService;
     }
 
     @Override
@@ -37,6 +43,12 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
         if(groupRepository.existsByName(dto.getName()))
             throw new AlreadyExistException("Group with this name already exist !");
 
+        // Checking journal
+        journalService.existJournal(dto.getJournalId());
+
+        // Checking faculty
+        facultyService.existFaculty(dto.getFacultyId());
+
         Group group = mapper.toEntity(dto);
         group.setIsActive(true);
         group.setCreatedDate(LocalDateTime.now());
@@ -47,6 +59,13 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
 
     @Override
     public void update(GroupDto dto, Integer id) {
+
+        // Checking journal
+        journalService.existJournal(dto.getJournalId());
+
+        // Checking faculty
+        facultyService.existFaculty(dto.getFacultyId());
+
         Group group = getEntity(id);
 
         Group newGroup = mapper.toEntity(dto);
@@ -91,10 +110,10 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
         return mapper.toDto(group.get());
     }
 
-    // Secondary Functions
+    // ======== SECONDARY FUNCTIONS ========
 
     public Group getEntity(Integer groupId){
-        return groupRepository.findByGroupIdAndCreatedDateIsNullAndIsActive(groupId, true)
+        return groupRepository.findByGroupIdAndDeletedDateIsNullAndIsActive(groupId, true)
                 .orElseThrow(() -> new NotFoundException("Group Not Found !"));
     }
 
@@ -113,4 +132,8 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
             throw new NotFoundException("Groups not found");
     }
 
+    public void existGroup(Integer groupId){
+        if(!groupRepository.existsByGroupIdAndDeletedDateIsNullAndIsActive(groupId, true))
+            throw new NotFoundException("Group with ID not found !");
+    }
 }

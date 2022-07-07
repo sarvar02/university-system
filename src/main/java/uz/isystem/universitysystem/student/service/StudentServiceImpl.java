@@ -2,13 +2,20 @@ package uz.isystem.universitysystem.student.service;
 
 import org.springframework.stereotype.Service;
 import uz.isystem.universitysystem._service.AbstractService;
+import uz.isystem.universitysystem.dto.StudentInfoDto;
+import uz.isystem.universitysystem.dto.StudentSubjectsDto;
+import uz.isystem.universitysystem.dto.SubjectsDto;
 import uz.isystem.universitysystem.exception.NotFoundException;
+import uz.isystem.universitysystem.faculty.FacultyDto;
+import uz.isystem.universitysystem.faculty.service.FacultyService;
+import uz.isystem.universitysystem.group.GroupDto;
+import uz.isystem.universitysystem.group.service.GroupService;
+import uz.isystem.universitysystem.group_subjects.service.GroupSubjectsService;
 import uz.isystem.universitysystem.student.Student;
 import uz.isystem.universitysystem.student.StudentDto;
 import uz.isystem.universitysystem.student.StudentMapper;
 import uz.isystem.universitysystem.student.StudentRepository;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,10 +23,16 @@ import java.util.List;
 public class StudentServiceImpl extends AbstractService<StudentMapper> implements StudentService{
 
     private final StudentRepository studentRepository;
+    private final GroupService groupService;
+    private final GroupSubjectsService groupSubjectsService;
+    private final FacultyService facultyService;
 
-    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper, GroupService groupService, GroupSubjectsService groupSubjectsService, FacultyService facultyService) {
         super(studentMapper);
         this.studentRepository = studentRepository;
+        this.groupService = groupService;
+        this.groupSubjectsService = groupSubjectsService;
+        this.facultyService = facultyService;
     }
 
     @Override
@@ -30,11 +43,14 @@ public class StudentServiceImpl extends AbstractService<StudentMapper> implement
     @Override
     public void create(StudentDto dto) {
 
+        // Checking group
+        groupService.existGroup(dto.getGroupId());
+
         Student student = mapper.toEntity(dto);
         student.setCreatedDate(LocalDateTime.now());
         student.setIsActive(true);
 
-        // => Saving to DB
+        // Save to Database
         saveToDatabase(student);
     }
 
@@ -74,8 +90,25 @@ public class StudentServiceImpl extends AbstractService<StudentMapper> implement
         return mapper.toDto(studentList);
     }
 
+    @Override
+    public StudentSubjectsDto getSubjectsOfStudent(Integer studentId) {
+        StudentDto studentDto = getById(studentId);
+        SubjectsDto subjectsDto = groupSubjectsService.getSubjectsByGroupId(studentDto.getGroupId());
 
-    // Secondary Functions //
+        return new StudentSubjectsDto(studentDto, subjectsDto);
+    }
+
+    @Override
+    public StudentInfoDto getStudentInfoById(Integer studentId) {
+        StudentDto studentDto = getById(studentId);
+        GroupDto groupDto = groupService.getById(studentDto.getGroupId());
+        FacultyDto facultyDto = facultyService.getById(groupDto.getFacultyId());
+
+        return new StudentInfoDto(studentDto.getName(), groupDto.getName(), facultyDto.getFacultyName());
+    }
+
+
+    // ======== SECONDARY FUNCTIONS ========
 
     public Student getEntity(Integer studentId){
         return studentRepository.findByStudentIdAndIsActiveAndDeletedDateIsNull(studentId, true)
@@ -83,7 +116,7 @@ public class StudentServiceImpl extends AbstractService<StudentMapper> implement
     }
 
     public List<Student> getAllEntities(){
-        List<Student> studentList = studentRepository.findAllByDeletedDateIsNullAAndIsActive(true);
+        List<Student> studentList = studentRepository.findAllByDeletedDateIsNullAndIsActive(true);
         if(studentList.isEmpty())
             throw new NotFoundException("Student not found !");
         return studentList;
@@ -92,4 +125,10 @@ public class StudentServiceImpl extends AbstractService<StudentMapper> implement
     public void saveToDatabase(Student student){
         studentRepository.save(student);
     }
+
+    public void existStudent(Integer studentId){
+        if(!studentRepository.existsByStudentIdAndDeletedDateIsNullAndIsActive(studentId, true))
+            throw new NotFoundException("Student with ID not found !");
+    }
+
 }

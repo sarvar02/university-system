@@ -2,6 +2,7 @@ package uz.isystem.universitysystem.faculty;
 
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 import uz.isystem.universitysystem._mapper.BaseMapper;
 
@@ -11,13 +12,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FacultyMapper extends BaseMapper<Faculty, FacultyDto> {
 
-    @Override
-    default FacultyDto toDto(Faculty faculty) {
-        return null;
-    }
 
     @Override
-    default List<FacultyDto> toDto(List<Faculty> e) {
-        return null;
-    }
+    @Mapping(target = "universityDto", source = "university")
+    FacultyDto toDto(Faculty faculty);
+
+    @Override
+    List<FacultyDto> toDto(List<Faculty> e);
 }

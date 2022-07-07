@@ -5,4 +5,7 @@ import uz.isystem.universitysystem.subject.Subject;
 import uz.isystem.universitysystem.subject.SubjectDto;
 
 public interface SubjectService extends GenericCrudService<Subject, SubjectDto, Integer> {
+
+    void existSubject(Integer subjectId);
+
 }

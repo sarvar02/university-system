@@ -83,4 +83,8 @@ public class UniversityServiceImpl extends AbstractService<UniversityMapper> imp
     public void saveToDatabase(University university){
         universityRepository.save(university);
     }
+
+    public boolean isExistUniversity(Integer id){
+        return universityRepository.existsByUniversityIdAndDeletedDateIsNullAndIsActive(id, true);
+    }
 }

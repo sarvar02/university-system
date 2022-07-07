@@ -11,8 +11,10 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     Optional<Student> findByStudentIdAndIsActiveAndDeletedDateIsNull(Integer studentId, Boolean isActive);
 
-    List<Student> findAllByDeletedDateIsNullAAndIsActive(Boolean isActive);
+    List<Student> findAllByDeletedDateIsNullAndIsActive(Boolean isActive);
 
     List<Student> findAllByGroupIdAndDeletedDateIsNullAndIsActive(Integer groupId, Boolean isActive);
+
+    Boolean existsByStudentIdAndDeletedDateIsNullAndIsActive(Integer studentId, Boolean isActive);
 
 }
