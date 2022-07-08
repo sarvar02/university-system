@@ -50,4 +50,10 @@ public class JournalController {
         List<JournalDto> journalDtos = journalService.getAll();
         return new ResponseEntity<>(journalDtos, HttpStatus.OK);
     }
+
+    @GetMapping("/group/{groupId}")
+    public ResponseEntity<JournalDto> getJournalByGroupId(@PathVariable("groupId") Integer groupId){
+        JournalDto journalDto = journalService.getJournalByGroupId(groupId);
+        return new ResponseEntity<>(journalDto, HttpStatus.OK);
+    }
 }

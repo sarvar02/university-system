@@ -1,14 +1,16 @@
 package uz.isystem.universitysystem.journal.service;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import uz.isystem.universitysystem._service.AbstractService;
 import uz.isystem.universitysystem.exception.AlreadyExistException;
 import uz.isystem.universitysystem.exception.NotFoundException;
+import uz.isystem.universitysystem.group.Group;
+import uz.isystem.universitysystem.group.service.GroupService;
 import uz.isystem.universitysystem.journal.Journal;
 import uz.isystem.universitysystem.journal.JournalDto;
 import uz.isystem.universitysystem.journal.JournalMapper;
 import uz.isystem.universitysystem.journal.JournalRepository;
-import uz.isystem.universitysystem.mark.Mark;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,10 +21,12 @@ import java.util.Optional;
 public class JournalServiceImpl extends AbstractService<JournalMapper> implements JournalService{
 
     private final JournalRepository journalRepository;
+    private final GroupService groupService;
 
-    public JournalServiceImpl(JournalRepository journalRepository, JournalMapper journalMapper) {
+    public JournalServiceImpl(JournalRepository journalRepository, JournalMapper journalMapper, @Lazy GroupService groupService) {
         super(journalMapper);
         this.journalRepository = journalRepository;
+        this.groupService = groupService;
     }
 
     @Override
@@ -74,6 +78,15 @@ public class JournalServiceImpl extends AbstractService<JournalMapper> implement
     public List<JournalDto> getAll() {
         List<Journal> journals = getAllEntities();
         return mapper.toDto(journals);
+    }
+
+    public JournalDto getJournalByGroupId(Integer groupId){
+        Group group = groupService.getEntity(groupId);
+
+        // Check journal for this group
+        existJournal(group.getJournalId());
+
+        return mapper.toDto(getEntity(group.getJournalId()));
     }
 
 

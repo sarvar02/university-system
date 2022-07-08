@@ -1,5 +1,6 @@
 package uz.isystem.universitysystem.student;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +61,9 @@ public class StudentController {
 
     // Studentlarni IDsi orqaili u o'qiydigan fanlar ro'yxatini olish
     @GetMapping("/{id}/subjects")
+    @ApiOperation(value = "Get the list of subject of student by its name",
+            notes = "Provide a student's name to look up specific student from database",
+            response = StudentSubjectsDto.class)
     public ResponseEntity<StudentSubjectsDto> getSubjectsOfStudent(@PathVariable("id") Integer studentId){
         StudentSubjectsDto studentSubjectsDto = studentService.getSubjectsOfStudent(studentId);
         return new ResponseEntity<>(studentSubjectsDto, HttpStatus.OK);
@@ -68,6 +72,9 @@ public class StudentController {
     // Student haqida ba'tafsil ma'lumot olish:
     // Student ismi, Gruppasini nomi, Fakultetini nomi, Universitet haqida ma'lumot
     @GetMapping("/info")
+    @ApiOperation(value = "Get info about student: name, faculty name, university name and address",
+            notes = "Provide a student's name to look up specific student from database",
+            response = StudentInfoDto.class)
     public ResponseEntity<StudentInfoDto> getStudentInfoById(@RequestParam("name") String name){
         StudentInfoDto studentInfoDto = studentService.getStudentInfoById(name);
         return new ResponseEntity<>(studentInfoDto, HttpStatus.OK);

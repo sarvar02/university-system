@@ -10,4 +10,5 @@ public interface JournalService extends GenericCrudService<Journal, JournalDto, 
 
     public void existJournal(Integer journalId);
 
+    JournalDto getJournalByGroupId(Integer groupId);
 }

@@ -1,10 +1,12 @@
 package uz.isystem.universitysystem.group;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import uz.isystem.universitysystem.dto.FacultyGroupsDto;
 import uz.isystem.universitysystem.dto.GroupRatingDto;
 import uz.isystem.universitysystem.dto.StudentRatingsDto;
 import uz.isystem.universitysystem.group.service.GroupService;
@@ -67,6 +69,9 @@ public class GroupController {
 
     // Studentlarni olgan bahosi bo'yicha kamayish tartibida chiqarish
     @GetMapping("/{groupId}/studentRatings")
+    @ApiOperation(value = "Get the list of student with their marks in descending order",
+            notes = "Provide a group id to look up specific student from database",
+            response = GroupRatingDto.class)
     public ResponseEntity<GroupRatingDto> getStudentsRatingByGroupId(@PathVariable("groupId") Integer groupId){
         GroupRatingDto ratingsDtoList = groupService.getStudentsMarkByGroupId(groupId);
         return new ResponseEntity<>(ratingsDtoList, HttpStatus.OK);

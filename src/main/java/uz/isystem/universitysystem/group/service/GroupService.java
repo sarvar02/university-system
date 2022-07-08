@@ -18,5 +18,7 @@ public interface GroupService extends GenericCrudService<Group, GroupDto, Intege
 
     void existGroup(Integer groupId);
 
-    public GroupRatingDto getStudentsMarkByGroupId(Integer groupId);
+    GroupRatingDto getStudentsMarkByGroupId(Integer groupId);
+
+    Group getEntity(Integer groupId);
 }

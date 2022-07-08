@@ -1,11 +1,13 @@
 package uz.isystem.universitysystem.faculty;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uz.isystem.universitysystem.dto.FacultyGroupsDto;
+import uz.isystem.universitysystem.dto.StudentSubjectsDto;
 import uz.isystem.universitysystem.faculty.service.FacultyService;
 
 import javax.validation.Valid;
@@ -53,6 +55,9 @@ public class FacultyController {
 
     // Fakultetga tegishli bo'lgan guruhlar va talabalar sonini olish uchun API
     @GetMapping("/{id}/groups-info")
+    @ApiOperation(value = "Get the list of groups and the number of students in each group in the faculty",
+            notes = "Provide a group id to look up specific student from database",
+            response = FacultyGroupsDto.class)
     public ResponseEntity<FacultyGroupsDto> getGroupsInfoByFacultyId(@PathVariable("id") Integer id){
         FacultyGroupsDto facultyGroupsDto = facultyService.getGroupsOfFaculty(id);
         return new ResponseEntity<>(facultyGroupsDto, HttpStatus.OK);

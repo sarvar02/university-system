@@ -2,6 +2,7 @@ package uz.isystem.universitysystem.journal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import uz.isystem.universitysystem.group.Group;
 
 import javax.swing.text.html.Option;
 import java.util.List;
@@ -19,4 +20,5 @@ public interface JournalRepository extends JpaRepository<Journal, Integer> {
     Boolean existsByJournalIdAndDeletedDateIsNullAndIsActive(Integer journalId, Boolean isActive);
 
     Boolean existsByJournalNameAndDeletedDateIsNullAndIsActive(String journalName, Boolean isActive);
+
 }

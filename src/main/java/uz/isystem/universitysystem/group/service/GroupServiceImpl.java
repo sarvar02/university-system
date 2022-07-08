@@ -152,8 +152,10 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
         return groupRatingDto;
     }
 
+
     // ======== SECONDARY FUNCTIONS ========
 
+    @Override
     public Group getEntity(Integer groupId){
         return groupRepository.findByGroupIdAndDeletedDateIsNullAndIsActive(groupId, true)
                 .orElseThrow(() -> new NotFoundException("Group Not Found !"));
