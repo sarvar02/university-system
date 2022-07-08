@@ -2,6 +2,7 @@ package uz.isystem.universitysystem.journal.service;
 
 import org.springframework.stereotype.Service;
 import uz.isystem.universitysystem._service.AbstractService;
+import uz.isystem.universitysystem.exception.AlreadyExistException;
 import uz.isystem.universitysystem.exception.NotFoundException;
 import uz.isystem.universitysystem.journal.Journal;
 import uz.isystem.universitysystem.journal.JournalDto;
@@ -30,6 +31,9 @@ public class JournalServiceImpl extends AbstractService<JournalMapper> implement
 
     @Override
     public void create(JournalDto dto) {
+
+        if(journalRepository.existsByJournalNameAndDeletedDateIsNullAndIsActive(dto.getJournalName(), true))
+            throw new AlreadyExistException("Journal with this NAME already exist !");
 
         Journal journal = mapper.toEntity(dto);
         journal.setCreatedDate(LocalDateTime.now());

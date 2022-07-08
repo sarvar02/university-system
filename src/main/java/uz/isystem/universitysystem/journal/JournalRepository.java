@@ -15,4 +15,6 @@ public interface JournalRepository extends JpaRepository<Journal, Integer> {
     List<Journal> findAllByDeletedDateIsNullAndIsActive(Boolean isActive);
 
     Boolean existsByJournalIdAndDeletedDateIsNullAndIsActive(Integer journalId, Boolean isActive);
+
+    Boolean existsByJournalNameAndDeletedDateIsNullAndIsActive(String journalName, Boolean isActive);
 }

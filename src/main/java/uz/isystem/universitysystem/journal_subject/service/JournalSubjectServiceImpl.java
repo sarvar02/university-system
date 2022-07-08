@@ -3,10 +3,12 @@ package uz.isystem.universitysystem.journal_subject.service;
 import org.springframework.stereotype.Service;
 import uz.isystem.universitysystem._service.AbstractService;
 import uz.isystem.universitysystem.exception.NotFoundException;
+import uz.isystem.universitysystem.journal.service.JournalService;
 import uz.isystem.universitysystem.journal_subject.JournalSubject;
 import uz.isystem.universitysystem.journal_subject.JournalSubjectDto;
 import uz.isystem.universitysystem.journal_subject.JournalSubjectMapper;
 import uz.isystem.universitysystem.journal_subject.JournalSubjectRepository;
+import uz.isystem.universitysystem.subject.service.SubjectService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,10 +17,14 @@ import java.util.List;
 public class JournalSubjectServiceImpl extends AbstractService<JournalSubjectMapper> implements JournalSubjectService{
 
     private final JournalSubjectRepository journalSubjectRepository;
+    private final SubjectService subjectService;
+    private final JournalService journalService;
 
-    public JournalSubjectServiceImpl(JournalSubjectRepository journalSubjectRepository, JournalSubjectMapper journalSubjectMapper) {
+    public JournalSubjectServiceImpl(JournalSubjectRepository journalSubjectRepository, JournalSubjectMapper journalSubjectMapper, SubjectService subjectService, JournalService journalService) {
         super(journalSubjectMapper);
         this.journalSubjectRepository = journalSubjectRepository;
+        this.subjectService = subjectService;
+        this.journalService = journalService;
     }
 
     @Override
@@ -28,6 +34,13 @@ public class JournalSubjectServiceImpl extends AbstractService<JournalSubjectMap
 
     @Override
     public void create(JournalSubjectDto dto) {
+
+        // Check subject
+        subjectService.existSubject(dto.getSubjectId());
+
+        // Check journal
+        journalService.existJournal(dto.getJournalId());
+
         JournalSubject journalSubject = mapper.toEntity(dto);
         journalSubject.setCreatedDate(LocalDateTime.now());
         journalSubject.setIsActive(true);

@@ -131,7 +131,7 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
         var ref = new Object() {
             double markValue = 0;
         };
-
+        
         List<StudentRatingsDto> studentRatingsList = new ArrayList<>();
         markList.stream().forEach(mark -> {
             if(studentList.contains(mark.getStudent())){
