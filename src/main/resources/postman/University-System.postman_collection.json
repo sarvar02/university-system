@@ -469,6 +469,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Group Ratings Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/group/2/studentRatings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"group",
+								"2",
+								"studentRatings"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -632,15 +652,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/student/8/info",
+							"raw": "{{url}}/api/student/info?name=Fathulla",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"student",
-								"8",
 								"info"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Fathulla"
+								}
 							]
 						}
 					},
@@ -658,7 +683,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"markValue\" : 5,\r\n    \"studentId\" : 2,\r\n    \"journalId\" : 1\r\n}",
+							"raw": "{\r\n    \"markValue\" : 55,\r\n    \"studentId\" : 5,\r\n    \"journalId\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -733,6 +758,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get All Journal Subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/journal-subject",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"journal-subject"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -802,6 +845,53 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete Subject",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/subject/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subject",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Subject",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Ingliz-Tili\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/subject/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subject",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -815,7 +905,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"subjectId\" : 3,\r\n    \"groupId\" : 1\r\n}",
+							"raw": "{\r\n    \"subjectId\" : 3,\r\n    \"groupId\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -914,6 +1004,85 @@
 								"api",
 								"group-subjects",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Journal Subjects",
+			"item": [
+				{
+					"name": "Create Journal Subjects",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subjectId\" : 4,\r\n    \"journalId\" : 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/journal-subject",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"journal-subject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Journal Subjects By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/journal-subject/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"journal-subject",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Mark",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"markValue\" : 64,\r\n    \"studentId\" : 1,\r\n    \"journalId\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/mark/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mark",
+								"2"
 							]
 						}
 					},
