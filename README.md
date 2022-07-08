@@ -12,7 +12,7 @@ This project was built to manage students' management system of university. It i
 
 ✅  Spring Web
 
-✅  PostgreSql
+✅  PostgreSQL
 
 ✅  Lombok
 
