@@ -14,5 +14,7 @@ public interface FacultyRepository extends JpaRepository<Faculty, Integer> {
 
     List<Faculty> findAllByDeletedDateIsNullAndIsActive(Boolean isActive);
 
+    List<Faculty> findAllByUniversityIdAndDeletedDateIsNullAndIsActive(Integer universityId, Boolean isActive);
+
     Boolean existsByFacultyIdAndDeletedDateIsNullAndIsActive(Integer facultyId, Boolean isActive);
 }

@@ -1,9 +1,13 @@
 package uz.isystem.universitysystem.university;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import uz.isystem.universitysystem.dto.StudentSubjectsDto;
+import uz.isystem.universitysystem.dto.UniversityInfoDto;
 import uz.isystem.universitysystem.university.service.UniversityService;
 
 import javax.validation.Valid;
@@ -48,5 +52,14 @@ public class UniversityController {
     public ResponseEntity deleteUniversity(){
         List<UniversityDto> universityDtoList = universityService.getAll();
         return ResponseEntity.ok(universityDtoList);
+    }
+
+    @GetMapping("/{universityId}/info")
+    @ApiOperation(value = "Get the number of faculties and students of university",
+            notes = "Provide a university's id to look up specific university from database",
+            response = UniversityInfoDto.class)
+    public ResponseEntity<UniversityInfoDto> getUniversityInfoById(@PathVariable("universityId") Integer universityId){
+        UniversityInfoDto universityInfoDto = universityService.getUniversityInfo(universityId);
+        return new ResponseEntity<>(universityInfoDto, HttpStatus.OK);
     }
 }

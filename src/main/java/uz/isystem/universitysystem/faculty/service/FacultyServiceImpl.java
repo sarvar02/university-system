@@ -82,7 +82,7 @@ public class FacultyServiceImpl extends AbstractService<FacultyMapper> implement
     @Override
     public void delete(Integer id) {
         Faculty faculty = getEntity(id);
-        faculty.setCreatedDate(LocalDateTime.now());
+        faculty.setDeletedDate(LocalDateTime.now());
 
         // Save To Database
         facultyRepository.save(faculty);
@@ -123,6 +123,13 @@ public class FacultyServiceImpl extends AbstractService<FacultyMapper> implement
         return faculties;
     }
 
+    public List<Faculty> getFacultiesByUniversityId(Integer universityId){
+        List<Faculty> faculties = facultyRepository.findAllByUniversityIdAndDeletedDateIsNullAndIsActive(universityId,true);
+        if(faculties.isEmpty())
+            throw new NotFoundException("Faculty Not Found !");
+        return faculties;
+    }
+
     public void saveToDataBase(Faculty faculty){
         facultyRepository.save(faculty);
     }
@@ -130,6 +137,10 @@ public class FacultyServiceImpl extends AbstractService<FacultyMapper> implement
     public void existFaculty(Integer facultyId){
         if(!facultyRepository.existsByFacultyIdAndDeletedDateIsNullAndIsActive(facultyId, true))
             throw new NotFoundException("Faculty with ID is not found !");
+    }
+
+    public boolean checkExistFaculty(Integer facultyId){
+        return facultyRepository.existsByFacultyIdAndDeletedDateIsNullAndIsActive(facultyId, true);
     }
 
 }

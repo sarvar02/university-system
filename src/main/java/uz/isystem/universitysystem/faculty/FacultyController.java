@@ -56,7 +56,7 @@ public class FacultyController {
     // Fakultetga tegishli bo'lgan guruhlar va talabalar sonini olish uchun API
     @GetMapping("/{id}/groups-info")
     @ApiOperation(value = "Get the list of groups and the number of students in each group in the faculty",
-            notes = "Provide a group id to look up specific student from database",
+            notes = "Provide a faculty id to look up specific infos",
             response = FacultyGroupsDto.class)
     public ResponseEntity<FacultyGroupsDto> getGroupsInfoByFacultyId(@PathVariable("id") Integer id){
         FacultyGroupsDto facultyGroupsDto = facultyService.getGroupsOfFaculty(id);

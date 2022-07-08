@@ -1,5 +1,6 @@
 package uz.isystem.universitysystem.group_subjects;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import uz.isystem.universitysystem.subject.SubjectDto;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GroupSubjectsDto {
     private Integer groupSubjectsId;
     private GroupDto groupDto;

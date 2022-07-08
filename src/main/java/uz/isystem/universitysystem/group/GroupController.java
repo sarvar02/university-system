@@ -70,7 +70,7 @@ public class GroupController {
     // Studentlarni olgan bahosi bo'yicha kamayish tartibida chiqarish
     @GetMapping("/{groupId}/studentRatings")
     @ApiOperation(value = "Get the list of student with their marks in descending order",
-            notes = "Provide a group id to look up specific student from database",
+            notes = "Provide a group id to look up specific group from database",
             response = GroupRatingDto.class)
     public ResponseEntity<GroupRatingDto> getStudentsRatingByGroupId(@PathVariable("groupId") Integer groupId){
         GroupRatingDto ratingsDtoList = groupService.getStudentsMarkByGroupId(groupId);
