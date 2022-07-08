@@ -19,6 +19,7 @@ import uz.isystem.universitysystem.student.Student;
 import uz.isystem.universitysystem.student.StudentMapper;
 import uz.isystem.universitysystem.student.service.StudentService;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,8 +143,12 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
             }
         });
 
+        // Evaluate average mark of group
+        Double average = ref.markValue/studentRatingsList.size();
+
         groupRatingDto.setStudentRatingsDtoList(studentRatingsList);
-        groupRatingDto.setAverageRating(ref.markValue/studentRatingsList.size());
+        groupRatingDto.setAverageRating(average);
+
         return groupRatingDto;
     }
 
