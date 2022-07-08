@@ -1,4 +1,4 @@
-# university-system
+# University-System
 
 This project was built to manage students' management system of university. It is possible to create new students, groups, subjects, journals, faculties, universities and more things. Moreover, there are also 2 files inside resources package which inludes postman APIs and environments.
 
