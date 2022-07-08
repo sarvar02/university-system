@@ -18,7 +18,7 @@ This project was built to manage students' management system of university. It i
 
 ✅  Validation
 
-✅  Swagger
+✅  Swagger - http://localhost:8080/swagger-ui/index.html
 
 # Requirement
   JDK 11
