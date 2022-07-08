@@ -2,6 +2,7 @@ package uz.isystem.universitysystem.subject.service;
 
 import org.springframework.stereotype.Service;
 import uz.isystem.universitysystem._service.AbstractService;
+import uz.isystem.universitysystem.exception.AlreadyExistException;
 import uz.isystem.universitysystem.exception.NotFoundException;
 import uz.isystem.universitysystem.subject.Subject;
 import uz.isystem.universitysystem.subject.SubjectDto;
@@ -28,6 +29,9 @@ public class SubjectServiceImpl extends AbstractService<SubjectMapper> implement
 
     @Override
     public void create(SubjectDto dto) {
+
+        if(existsByName(dto.getName()))
+            throw new AlreadyExistException("Subject with name already exists !");
 
         Subject subject = mapper.toEntity(dto);
         subject.setCreatedDate(LocalDateTime.now());
@@ -64,6 +68,11 @@ public class SubjectServiceImpl extends AbstractService<SubjectMapper> implement
         return mapper.toDto(subjects);
     }
 
+    @Override
+    public void existSubject(Integer subjectId) {
+        if(!subjectRepository.existsBySubjectIdAndDeletedDateIsNullAndIsActive(subjectId, true))
+            throw new NotFoundException("Subject with this ID not found !");
+    }
 
     // ======== SECONDARY FUNCTIONS ========
 
@@ -84,9 +93,8 @@ public class SubjectServiceImpl extends AbstractService<SubjectMapper> implement
         subjectRepository.save(subject);
     }
 
-    @Override
-    public void existSubject(Integer subjectId) {
-        if(!subjectRepository.existsBySubjectIdAndDeletedDateIsNullAndIsActive(subjectId, true))
-            throw new NotFoundException("Subject with this ID not found !");
+    public boolean existsByName(String subjectName){
+        return subjectRepository.existsByNameAndDeletedDateIsNullAndIsActive(subjectName, true) ? true : false;
     }
+
 }

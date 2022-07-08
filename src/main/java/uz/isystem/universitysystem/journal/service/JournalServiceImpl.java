@@ -12,6 +12,7 @@ import uz.isystem.universitysystem.mark.Mark;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -45,6 +46,10 @@ public class JournalServiceImpl extends AbstractService<JournalMapper> implement
 
     @Override
     public void update(JournalDto dto, Integer id) {
+        Optional<Journal> check = journalRepository.findByJournalNameAndDeletedDateIsNullAndIsActive(dto.getJournalName(), true);
+        if(check.isPresent() && check.get().getJournalId() != id)
+            throw new AlreadyExistException("Journal with this NAME already exist !");
+
         Journal journal = getEntity(id);
 
         Journal newJournal = mapper.toEntity(dto);

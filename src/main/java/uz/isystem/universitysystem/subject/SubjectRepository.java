@@ -11,6 +11,8 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
 
     Optional<Subject> findBySubjectIdAndDeletedDateIsNullAndIsActive(Integer subjectId, Boolean isActive);
 
+    Boolean existsByNameAndDeletedDateIsNullAndIsActive(String subjectName, Boolean isActive);
+
     List<Subject> findAllByDeletedDateIsNullAndIsActive(Boolean isActive);
 
     Boolean existsBySubjectIdAndDeletedDateIsNullAndIsActive(Integer subjectId, Boolean isActive);
