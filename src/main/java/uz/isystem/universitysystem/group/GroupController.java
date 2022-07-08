@@ -5,7 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import uz.isystem.universitysystem.dto.GroupRatingDto;
+import uz.isystem.universitysystem.dto.StudentRatingsDto;
 import uz.isystem.universitysystem.group.service.GroupService;
+import uz.isystem.universitysystem.student.Student;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -60,5 +63,12 @@ public class GroupController {
     public ResponseEntity<GroupDto> getGroupsByJournalId(@PathVariable("journalId") Integer journalId){
         GroupDto groupDtoList = groupService.getGroupsByJournalId(journalId);
         return new ResponseEntity<>(groupDtoList, HttpStatus.OK);
+    }
+
+    // Studentlarni olgan bahosi bo'yicha kamayish tartibida chiqarish
+    @GetMapping("/{groupId}/studentRatings")
+    public ResponseEntity<GroupRatingDto> getStudentsRatingByGroupId(@PathVariable("groupId") Integer groupId){
+        GroupRatingDto ratingsDtoList = groupService.getStudentsMarkByGroupId(groupId);
+        return new ResponseEntity<>(ratingsDtoList, HttpStatus.OK);
     }
 }

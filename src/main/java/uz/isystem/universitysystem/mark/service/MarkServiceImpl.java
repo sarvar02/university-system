@@ -76,6 +76,13 @@ public class MarkServiceImpl extends AbstractService<MarkMapper> implements Mark
         return mapper.toDto(marks);
     }
 
+    public List<Mark> getAllMarksOrderByMarkValue(){
+        List<Mark> marks = markRepository.findAllByMarks();
+        if(marks.isEmpty())
+            throw new NotFoundException("Marks not found !");
+        return marks;
+    }
+
     // ======== SECONDARY FUNCTIONS ========
 
     public Mark getEntity(Integer id){

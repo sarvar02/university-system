@@ -1,7 +1,10 @@
 package uz.isystem.universitysystem.group.service;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import uz.isystem.universitysystem._service.AbstractService;
+import uz.isystem.universitysystem.dto.GroupRatingDto;
+import uz.isystem.universitysystem.dto.StudentRatingsDto;
 import uz.isystem.universitysystem.exception.AlreadyExistException;
 import uz.isystem.universitysystem.exception.NotFoundException;
 import uz.isystem.universitysystem.faculty.service.FacultyService;
@@ -10,8 +13,14 @@ import uz.isystem.universitysystem.group.GroupDto;
 import uz.isystem.universitysystem.group.GroupMapper;
 import uz.isystem.universitysystem.group.GroupRepository;
 import uz.isystem.universitysystem.journal.service.JournalService;
+import uz.isystem.universitysystem.mark.Mark;
+import uz.isystem.universitysystem.mark.service.MarkService;
+import uz.isystem.universitysystem.student.Student;
+import uz.isystem.universitysystem.student.StudentMapper;
+import uz.isystem.universitysystem.student.service.StudentService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +30,16 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
     private final GroupRepository groupRepository;
     private final JournalService journalService;
     private final FacultyService facultyService;
+    private final MarkService markService;
+    private final StudentService studentService;
 
-    public GroupServiceImpl(GroupRepository groupRepository, GroupMapper groupMapper, JournalService journalService, FacultyService facultyService) {
+    public GroupServiceImpl(GroupRepository groupRepository, GroupMapper groupMapper, JournalService journalService, FacultyService facultyService, @Lazy MarkService markService, @Lazy StudentService studentService) {
         super(groupMapper);
         this.groupRepository = groupRepository;
         this.journalService = journalService;
         this.facultyService = facultyService;
+        this.markService = markService;
+        this.studentService = studentService;
     }
 
     @Override
@@ -108,6 +121,30 @@ public class GroupServiceImpl extends AbstractService<GroupMapper> implements Gr
         if(group.isEmpty())
             throw new NotFoundException("Group Not Found !");
         return mapper.toDto(group.get());
+    }
+
+    public GroupRatingDto getStudentsMarkByGroupId(Integer groupId){
+        List<Mark> markList = markService.getAllMarksOrderByMarkValue();
+        List<Student> studentList = studentService.getStudentsEntityByGroupId(groupId);
+        GroupRatingDto groupRatingDto = new GroupRatingDto();
+
+        var ref = new Object() {
+            double markValue = 0;
+        };
+
+        List<StudentRatingsDto> studentRatingsList = new ArrayList<>();
+        markList.stream().forEach(mark -> {
+            if(studentList.contains(mark.getStudent())){
+                ref.markValue += mark.getMarkValue();
+                StudentRatingsDto studentRatingsDto =
+                        new StudentRatingsDto(mark.getStudent().getName(), mark.getMarkValue());
+                studentRatingsList.add(studentRatingsDto);
+            }
+        });
+
+        groupRatingDto.setStudentRatingsDtoList(studentRatingsList);
+        groupRatingDto.setAverageRating(ref.markValue/studentRatingsList.size());
+        return groupRatingDto;
     }
 
     // ======== SECONDARY FUNCTIONS ========

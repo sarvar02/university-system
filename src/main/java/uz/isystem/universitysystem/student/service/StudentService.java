@@ -17,4 +17,6 @@ public interface StudentService extends GenericCrudService<Student, StudentDto, 
 
     StudentInfoDto getStudentInfoById(String name);
 
+    List<Student> getStudentsEntityByGroupId(Integer groupId);
+
 }

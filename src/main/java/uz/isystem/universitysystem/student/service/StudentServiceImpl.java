@@ -117,6 +117,14 @@ public class StudentServiceImpl extends AbstractService<StudentMapper> implement
                 universityDto.getAddress());
     }
 
+    @Override
+    public List<Student> getStudentsEntityByGroupId(Integer groupId) {
+        List<Student> studentList = studentRepository.findAllByGroupIdAndDeletedDateIsNullAndIsActive(groupId, true);
+        if(studentList.isEmpty())
+            throw new NotFoundException("Students not found in this group !");
+        return studentList;
+    }
+
 
     // ======== SECONDARY FUNCTIONS ========
 
