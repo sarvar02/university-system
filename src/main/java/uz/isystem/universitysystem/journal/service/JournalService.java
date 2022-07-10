@@ -5,7 +5,6 @@ import uz.isystem.universitysystem._service.GenericCrudService;
 import uz.isystem.universitysystem.journal.Journal;
 import uz.isystem.universitysystem.journal.JournalDto;
 
-@Service
 public interface JournalService extends GenericCrudService<Journal, JournalDto, Integer> {
 
     public void existJournal(Integer journalId);
